@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:mac_vendor_store/views/screens/nav_screens/earnings_screen.dart';
 import 'package:mac_vendor_store/views/screens/nav_screens/edit_screen.dart';
 import 'package:mac_vendor_store/views/screens/nav_screens/orders_screen.dart';
+import 'package:mac_vendor_store/views/screens/nav_screens/products_screen.dart';
 import 'package:mac_vendor_store/views/screens/nav_screens/vendor_profile_screen.dart';
 import 'package:mac_vendor_store/views/screens/nav_screens/upload_screen.dart';
+import 'package:mac_vendor_store/views/screens/orders/view/order_screen.dart';
 
 class MainVendorScreen extends StatefulWidget {
   const MainVendorScreen({super.key});
@@ -17,9 +19,9 @@ class _MainVendorScreenState extends State<MainVendorScreen> {
   int _pageIndex = 0;
   final List<Widget> _pages = [
     EarningsScreen(),
-    UploadScreen(),
-    EditScreen(),
-    OrdersScreen(),
+    ProductsScreen(),
+    // EditScreen(),
+    OrderScreen(),
     VendorProfileScreen(),
   ];
   @override
@@ -48,10 +50,10 @@ class _MainVendorScreenState extends State<MainVendorScreen> {
               ),
               label: 'Upload',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit),
-              label: 'Edit',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.edit),
+            //   label: 'Edit',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.shopping_cart),
               label: 'Orders',

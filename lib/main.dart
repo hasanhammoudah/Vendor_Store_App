@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mac_vendor_store/controller/vendor_auth_controller.dart';
 import 'package:mac_vendor_store/provider/vendor_provider.dart';
 import 'package:mac_vendor_store/views/screens/authentication/login_screen.dart';
 import 'package:mac_vendor_store/views/screens/main_vendor_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));
@@ -15,14 +15,12 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> checkTokenAndSetUser(WidgetRef ref) async {
-      final prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
-      String? vendorJson = prefs.getString('vendor');
-      if (token != null && vendorJson != null) {
-        ref.read(vendorProvider.notifier).setVendor(prefs.getString('vendor')!);
-      }
-    }
+
+  Future<void> checkTokenAndSetUser(WidgetRef ref, context) async {
+    await VendorAuthController().getUserData(context, ref);
+
+    ref.watch(vendorProvider);
+  }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -32,7 +30,7 @@ class MyApp extends ConsumerWidget {
         useMaterial3: true,
       ),
       home: FutureBuilder(
-          future: checkTokenAndSetUser(ref),
+          future: checkTokenAndSetUser(ref,context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
@@ -42,7 +40,7 @@ class MyApp extends ConsumerWidget {
               );
             }
             final vendor = ref.watch(vendorProvider);
-            return vendor != null
+            return vendor!.token.isNotEmpty
                 ? const MainVendorScreen()
                 : const LoginScreen();
           }),

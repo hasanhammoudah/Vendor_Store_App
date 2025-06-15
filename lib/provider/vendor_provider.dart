@@ -4,14 +4,17 @@ import 'package:mac_vendor_store/models/vendor.dart';
 class VendorProvider extends StateNotifier<Vendor?> {
   VendorProvider()
       : super(Vendor(
-          id: '676d1496d75cfab6e6087301',
-          fullName: 'hasanHammoudeh',
+          id: '',
+          fullName: '',
           email: '',
           state: '',
           city: '',
           locallity: '',
           role: '',
           password: '',
+          token: '',
+          storeImage: '',
+          storeDescription: '',
         ));
 
   Vendor? get vendor => state;
