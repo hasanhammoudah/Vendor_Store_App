@@ -36,6 +36,7 @@ class OrderProvider extends StateNotifier<List<Order>> {
             processing: processing ?? order.processing,
             delivered: delivered ?? order.delivered,
             cancelled: cancelled ?? order.cancelled,
+            productId: order.productId,
           )
         else
           order,

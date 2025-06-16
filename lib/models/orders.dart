@@ -19,26 +19,32 @@ class Order {
   final bool delivered;
   final bool cancelled;
 
+  final String? paymentStatus;
+  final String? paymentIntentId;
+  final String? paymentMethod;
+  final String productId;
 
-  Order({
-  required this.id,
-  required this.email,
-  required this.fullName,
-  required this.state,
-  required this.city,
-  required this.locality,
-  required this.productName,
-  required this.productPrice,
-  required this.quantity,
-  required this.category,
-  required this.image,
-  required this.vendorId,
-  required this.buyerId,
-  required this.processing,
-  required this.delivered,
-  required this.cancelled, 
-});
-
+  Order(
+      {required this.id,
+      required this.email,
+      required this.fullName,
+      required this.state,
+      required this.city,
+      required this.locality,
+      required this.productName,
+      required this.productPrice,
+      required this.quantity,
+      required this.category,
+      required this.image,
+      required this.vendorId,
+      required this.buyerId,
+      required this.processing,
+      required this.delivered,
+      this.paymentStatus,
+      this.paymentIntentId,
+      this.paymentMethod,
+      required this.productId,
+      required this.cancelled});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -58,9 +64,14 @@ class Order {
       'processing': processing,
       'delivered': delivered,
       'cancelled': cancelled,
-
+      'paymentStatus': paymentStatus,
+      'paymentIntentId': paymentIntentId,
+      'paymentMethod': paymentMethod,
+      'productId': productId,
     };
   }
+
+  String toJson() => json.encode(toMap());
 
   factory Order.fromJson(Map<String, dynamic> map) {
     return Order(
@@ -79,13 +90,11 @@ class Order {
       buyerId: map['buyerId'] as String,
       processing: map['processing'] as bool,
       delivered: map['delivered'] as bool,
-      cancelled: map['cancelled'] ?? false, // ✅ يستخدم false إذا لم يكن موجود
-
+      paymentStatus: map['paymentStatus'] as String,
+      paymentIntentId: map['paymentIntentId'] as String,
+      paymentMethod: map['paymentMethod'] as String,
+      productId: map['productId'] ?? '',
+      cancelled: map['cancelled'] as bool,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  // factory Order.fromJson(String source) =>
-  //     Order.fromMap(json.decode(source) as Map<String, dynamic>);
 }
